@@ -1,1 +1,1 @@
-{"data":[[null,null,null]]}
+{"data":[{"id":1,"title":"Cafe","description":"cafe tostado molido","code":"PA123","price":100,"status":true,"stock":50,"category":"Bebidas","thumbnails":["ruta/imagen1.jpg","ruta/imagen2.jpg"]},{"id":2,"title":"Arroz","description":"doble carola","code":"P101","price":20,"status":true,"stock":50,"category":"Alimentos","thumbnails":["ruta/imagen1.jpg","ruta/imagen2.jpg"]}]}
