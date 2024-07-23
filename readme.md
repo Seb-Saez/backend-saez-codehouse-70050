@@ -2,7 +2,7 @@ A continuacion se listaran las instrucciones para utilizar el programa desde ins
 
 - Agregar un producto:
 
-POST - http://localhost:8080/
+POST - http://localhost:8080/api/products/
 
 Body:
 {
@@ -25,7 +25,7 @@ Body:
 
 - Solicitar un producto por ID:
 
-GET - http://localhost:8080/:pid  (Comienzan con 1 y se autoincrementan)
+GET - http://localhost:8080/api/products/:pid  (Comienzan con 1 y se autoincrementan)
 
 
 
@@ -33,7 +33,7 @@ GET - http://localhost:8080/:pid  (Comienzan con 1 y se autoincrementan)
 
 - Modificar un producto por ID:
 
-PUT - http://localhost:8080/:pid  
+PUT - http://localhost:8080/api/products/:pid
 
 Body: ej
 {
@@ -47,8 +47,7 @@ Body: ej
 
 - Eliminar un producto por ID:
 
-DELETE - http://localhost:8080/:pid
-
+DELETE - http://localhost:8080/api/products/:pid
 
 
 

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real Time Products</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <h1>Real Time Products</h1>
+    <form id="productForm">
+        <div>
+            <label for="title">Title:</label>
+            <input type="text" id="title" name="title" required>
+        </div>
+        <div>
+            <label for="description">Description:</label>
+            <input type="text" id="description" name="description" required>
+        </div>
+        <div>
+            <label for="code">Code:</label>
+            <input type="text" id="code" name="code" required>
+        </div>
+        <div>
+            <label for="price">Price:</label>
+            <input type="number" id="price" name="price" required>
+        </div>
+        <div>
+            <label for="status">Status:</label>
+            <select id="status" name="status" required>
+                <option value="true">Active</option>
+                <option value="false">Inactive</option>
+            </select>
+        </div>
+        <div>
+            <label for="stock">Stock:</label>
+            <input type="number" id="stock" name="stock" required>
+        </div>
+        <div>
+            <label for="category">Category:</label>
+            <input type="text" id="category" name="category" required>
+        </div>
+        <input type="hidden" id="thumbnails" name="thumbnails" value='["ruta/imagen1.jpg","ruta/imagen2.jpg"]'>
+        <button type="submit">Add Product</button>
+    </form>
+
+    <div class="cardContainer" id="productList">
+        {{#each productList}}
+        <div class="card">
+            <h3>{{this.title}}</h3>
+            <p>{{this.description}}</p>
+            <p><strong>Price:</strong> ${{this.price}}</p>
+            <p><strong>Stock:</strong> {{this.stock}}</p>
+            <button class="deleteBtn" data-id="{{this.id}}">Delete</button>
+        </div>
+        {{/each}}
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const socket = io();
+
+        // Handle form submission
+        document.getElementById('productForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            const product = {
+                title: formData.get('title'),
+                description: formData.get('description'),
+                code: formData.get('code'),
+                price: parseFloat(formData.get('price')),
+                status: formData.get('status') === 'true',
+                stock: parseInt(formData.get('stock')),
+                category: formData.get('category'),
+                thumbnails: JSON.parse(formData.get('thumbnails'))
+            };
+
+            socket.emit('addProduct', product);
+        });
+
+        // Handle product deletion
+        document.getElementById('productList').addEventListener('click', function (e) {
+            if (e.target.classList.contains('deleteBtn')) {
+                const productId = e.target.getAttribute('data-id');
+                socket.emit('deleteProduct', productId);
+            }
+        });
+
+        // Update product list on real-time
+        socket.on('updateProductList', function (productList) {
+            const productListDiv = document.getElementById('productList');
+            productListDiv.innerHTML = '';
+            productList.forEach(product => {
+                const productCard = document.createElement('div');
+                productCard.classList.add('card');
+                productCard.innerHTML = `
+                    <h3>${product.title}</h3>
+                    <p>${product.description}</p>
+                    <p><strong>Price:</strong> $${product.price}</p>
+                    <p><strong>Stock:</strong> ${product.stock}</p>
+                    <button class="deleteBtn" data-id="${product.id}">Delete</button>
+                `;
+                productListDiv.appendChild(productCard);
+            });
+        });
+    </script>
+</body>
+</html>

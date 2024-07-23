@@ -40,7 +40,7 @@ class CartManager {
 
     generateId() {
         const ids = this.cartList.map(cart => cart.id);
-        const maxId = ids.length > 0 ? Math.max(...ids) : 999; // Iniciar desde 1000
+        const maxId = ids.length > 0 ? Math.max(...ids) : 999; // Aca los IDs incian desde 1000
         return maxId + 1;
     }
 
