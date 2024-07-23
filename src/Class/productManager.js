@@ -5,17 +5,18 @@ class ProductManager {
         this.path = path;
         this.productList = [];
 
-        // Verificar y crear el archivo si no existe
-        this.initializeFile(); 
+        // verificar si existe el arch sino se crea
+        this.initializeFile();
     }
 
     async initializeFile() {
         try {
-            await fs.promises.access(this.path); 
+            await fs.promises.access(this.path);
         } catch (error) {
             await fs.promises.writeFile(this.path, JSON.stringify({ data: [] }));
         }
     }
+
     async getProductById(id) {
         await this.getProductList();
         return this.productList.find(product => product.id == id);
@@ -24,9 +25,9 @@ class ProductManager {
     async getProductList() {
         try {
             const list = await fs.promises.readFile(this.path, 'utf-8');
-            this.productList = JSON.parse(list).data || []; 
+            this.productList = JSON.parse(list).data || [];
         } catch (error) {
-            this.productList = []; // Si no hay archivo, inicializar como un array vacío
+            this.productList = []; // si no hay archivo, inicializar como un array vacío
         }
         return [...this.productList];
     }
@@ -34,16 +35,15 @@ class ProductManager {
     async addProduct(product) {
         await this.getProductList();
 
-        const lastId = this.productList.length > 0 ? this.productList[this.productList.length - 1].id : 0; 
-        const newId = lastId + 1; 
+        const lastId = this.productList.length > 0 ? this.productList[this.productList.length - 1].id : 0;
+        const newId = lastId + 1;
 
-        const newProduct = { id: newId, ...product }; 
+        const newProduct = { id: newId, ...product };
 
         this.productList.push(newProduct);
 
         await fs.promises.writeFile(this.path, JSON.stringify({ data: this.productList }));
     }
-
 
     async updateProduct(id, updatedFields) {
         await this.getProductList();
@@ -59,9 +59,8 @@ class ProductManager {
             return updatedProduct;
         }
 
-        return null; // si no se encuentra el producto devuelve null
+        return null; // si no encuentra el producto devuelve null
     }
-
 
     async deleteProduct(id) {
         await this.getProductList();
@@ -76,10 +75,8 @@ class ProductManager {
             return deletedProduct;
         }
 
-        return null; // si no se encuentra el producto devuelve null
+        return null; // si no encuentra el producto devuelve null
     }
-
-
 }
 
 export default ProductManager;

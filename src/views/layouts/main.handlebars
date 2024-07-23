@@ -7,7 +7,7 @@
     {{!-- no hay forma de importar el css, asique lo solucione asi --}}
     <style>
         :root {
-    --background: #f0f0f0;
+    --background: #758488;
     --color1: #007bff;
     --color2: #28a745;
     --text-color: #333;
@@ -19,6 +19,54 @@ body {
     color: var(--text-color);
     margin: 0;
     padding: 0;
+}
+
+h1 {
+    text-align: center;
+    margin: 20px 0;
+    color: black;
+}
+
+form {
+    max-width: 600px;
+    margin: 20px auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+form div {
+    margin-bottom: 15px;
+}
+
+form label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+form input[type="text"],
+form input[type="number"],
+form select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+form button {
+    background-color: var(--color1);
+    color: #fff;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+form button:hover {
+    background-color: var(--color2);
 }
 
 .cardContainer {
@@ -57,6 +105,21 @@ body {
 .card p strong {
     color: var(--color2);
 }
+
+.card button.deleteBtn {
+    background-color: var(--color2);
+    color: #fff;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.card button.deleteBtn:hover {
+    background-color: #ff4d4d;
+}
+
 
 
     </style>
