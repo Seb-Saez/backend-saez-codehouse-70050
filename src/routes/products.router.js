@@ -1,6 +1,7 @@
 import { Router } from "express";
-import ProductManager from '../Class/productManager.js';
 import { __dirname } from '../utils.js';
+import ProductManager from "../Class/productManager.js";
+import { productModel } from "../model/product.model.js";   // importacion del productModel
 
 const router = Router();
 
@@ -8,16 +9,21 @@ const productManager = new ProductManager(__dirname + '/data/product.json');
 
 // POST para agregar un nuevo producto
 router.post('/', async (req, res) => {
+    try{
     const { title, description, code, price, status, stock, category, thumbnails } = req.body;
 
-    if (!title || !description || !code || price === undefined || status === undefined || stock === undefined || !category || !Array.isArray(thumbnails)) {
-        return res.status(400).json({ message: 'Todos los campos son obligatorios y thumbnails debe ser un array' });
-    }
+    if (!title || !description || !code || price === undefined || price < 0 || status === undefined || stock === undefined || stock < 0 || !category || !Array.isArray(thumbnails)) {
+        return res.status(401).json({ message: 'Todos los campos son obligatorios y thumbnails debe ser un array' });
+    } 
 
     const product = { title, description, code, price, status, stock, category, thumbnails };
-    await productManager.addProduct(product);
+    const newProduct = await productModel.create(product);
     res.status(201).json({ message: 'Producto añadido con éxito' });
+} catch (err){
+    res.status(500).json({ mesagge: "Ocurrio un error, por favor intentelo nuevamente completando los campos"});
+}
 });
+
 
 
 // GET para obtener un producto por id

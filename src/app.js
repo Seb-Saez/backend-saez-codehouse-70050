@@ -8,11 +8,15 @@ import viewRoute from './routes/views.router.js';
 import handlebars from 'express-handlebars';
 import http from 'http';
 import { Server } from 'socket.io';
+import mongoose from 'mongoose';
 
 // config de express
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+const PORT = 8080 || 3030;
+
 
 // config de websocket
 const server = http.createServer(app);
@@ -63,6 +67,16 @@ io.on('connection', (socket) => {
     });
 });
 
-server.listen(8080, () => {
-    console.log('Servidor corriendo en el puerto 8080');
+// Conectar BBDD con mongoose
+
+mongoose.connect(
+    'mongodb+srv://sebastiansaez:hipH7OsAVhpG7dAH@coderback-1-70050.vmsndmx.mongodb.net/?retryWrites=true&w=majority&appName=CoderBack-1-70050', { dbName: 'coderback' })
+    .then(()=>{
+        console.log("Conectado a la BBDD correctamente");
+        
+    })
+
+
+server.listen(PORT, () => {
+    console.log('Servidor corriendo en el puerto '+ PORT);
 });

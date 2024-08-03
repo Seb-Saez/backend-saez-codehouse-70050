@@ -1,23 +1,23 @@
 A continuacion se listaran las instrucciones para utilizar el programa desde insomnia:
 
-- Agregar un producto:
+- Agregar un producto: por body con un objeto json respetando el siguiente Schema
 
 POST - http://localhost:8080/api/products/
 
 Body:
 {
-    "title": "Producto A",
-    "description": "Descripción del Producto A",
-    "code": "P100",
-    "price": 100,
-    "status": true,
-    "stock": 10,
-    "category": "Categoría A",
-    "thumbnails": [
-        "ruta/imagen1.jpg",
-        "ruta/imagen2.jpg"
-    ]
-}
+        "title": String,
+        "description": String,
+        "code": Number,
+        "price": Number,
+        "status": Boolean,
+        "stock": Number,
+        "category": {
+            type: String,
+            enum: ["Perifericos", "Monitores", "Notebooks", "GPU", "Gabinetes"]
+        }
+        "thumbnails": ["url_imagen3.jpg", "url_imagen4.jpg"]
+    }
 
 
 
