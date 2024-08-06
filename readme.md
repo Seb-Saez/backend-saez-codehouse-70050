@@ -1,5 +1,7 @@
 A continuacion se listaran las instrucciones para utilizar el programa desde insomnia:
 
+█ Manejo de productos:
+
 - Agregar un producto: por body con un objeto json respetando el siguiente Schema
 
 POST - http://localhost:8080/api/products/
@@ -17,7 +19,7 @@ Body:
             enum: ["Perifericos", "Monitores", "Notebooks", "GPU", "Gabinetes"]
         }
         "thumbnails": ["url_imagen3.jpg", "url_imagen4.jpg"]
-    }
+}
 
 
 
@@ -25,7 +27,9 @@ Body:
 
 - Solicitar un producto por ID:
 
-GET - http://localhost:8080/api/products/:pid  (Comienzan con 1 y se autoincrementan)
+GET - http://localhost:8080/api/products/:pid  
+
+** Remplazar :pid por el id del producto de MongoDB
 
 
 
@@ -50,6 +54,7 @@ Body: ej
 DELETE - http://localhost:8080/api/products/:pid
 
 
+█ Manejo de carritos:
 
 
 - Crear un carrito:
@@ -57,11 +62,24 @@ DELETE - http://localhost:8080/api/products/:pid
 POST - http://localhost:8080/api/carts/
 
 
+- Listar todos los carritos creados:
+
+GET - http://localhost:8080/api/carts/
+
+
+- Listar carrito por ID:
+
+GET - http://localhost:8080/api/carts/:CID
 
 
 
-- Agregar un producto determinado desde Product.json a un Carrito, por ID: 
+- Agregar un producto al carrito:
 
-POST - /api/carts/:cid/product/:pid    ( donde :cid es el ID del carrito *Comienzan en 1000 y se autoincrementan*, y :pid es el ID del producto *Comienzan en 1 y se autoincrementan*)
+POST - http://localhost:8080/api/carts/:cid/product/:pid
 
-Ej: /api/carts/1000/product/2    (ID carrito: 1000  y  ID producto: 2)
+En body un json con el obj:
+
+{
+	    "quantity": N     (Numero a agregar)
+
+}
