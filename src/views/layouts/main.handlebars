@@ -80,6 +80,7 @@ form button:hover {
 
 .card {
     background-color: #fff;
+    margin-top: 20px;
     border: 1px solid #ddd;
     border-radius: 10px;
     padding: 20px;
@@ -88,7 +89,6 @@ form button:hover {
 }
 
 .card:hover {
-    transform: translateY(-10px);
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
@@ -119,6 +119,148 @@ form button:hover {
 .card button.deleteBtn:hover {
     background-color: #ff4d4d;
 }
+
+
+.detailContainer div{
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: space-around;
+    margin: none;
+}
+
+.detailContainer form{
+    margin-top: 50px;
+    padding: 5px;
+    width: 40vw;
+    height: 10vh;
+    border: 3px solid #b1b1b1;
+    box-shadow: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.detailContainer form input{
+    max-width: 50%;
+    margin: auto;
+}
+.home-btn{
+    margin: 50px;
+    padding: 10px;
+    background-color: #95a2a5;
+    color: white;
+    width: 300px;
+    height: max-content;
+    border-radius: 0.5em;
+    text-decoration: none;
+    display: block;
+    text-align: center;
+
+}
+
+/* Estilos para el contenedor de los carritos */
+.cart-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+    background-color: #f4f4f4;
+}
+
+/* Estilos para cada tarjeta de carrito */
+.cart-card {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin: 10px 0;
+}
+
+/* Estilos para el título del carrito */
+.cart-h2 {
+    margin-top: 0;
+    font-size: 1.5em;
+    color: #333;
+}
+
+/* Estilos para la lista de productos */
+.cart-card ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 10px 0;
+}
+
+/* Estilos para cada ítem de la lista */
+.cart-card li {
+    padding: 5px 0;
+    font-size: 1em;
+    color: #555;
+}
+
+/* Estilos para el total a pagar */
+.cart-card p {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #333;
+}
+
+/* cartDetail.css */
+.cart-container {
+    padding: 20px;
+    font-family: Arial, sans-serif;
+}
+
+.cart-container h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.cart-container ul {
+    list-style: none;
+    padding: 0;
+}
+
+.cart-container li {
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.cart-container form {
+    display: inline;
+}
+
+.cart-container p {
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+.btn1{
+    background-color: var(--color2);
+    color: #fff;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.cart-card ul li button{
+    background-color: rgb(169, 3, 3);
+    color: white;
+    border-radius: 0.5em;
+    padding: 8px 12px;
+    border: none;
+    color:white;
+    cursor: pointer;
+    
+}
+
+
 
 
 

@@ -1,0 +1,17 @@
+<a href="/products" class="home-btn">HOME</a>
+<a href="/carts/66b53f8d674ee772aa45240a" class="home-btn">Carrito ID: 66b53f8d674ee772aa45240a</a>
+<div class="cart-container">
+    {{#each carts}}
+    <div class="cart-card">
+        <h2 class="cart-h2">ID del Carrito: {{_id}}</h2>
+        <ul>
+            {{#each products}}
+            <li>
+                Producto: {{productId.title}} - Cantidad: {{quantity}}
+            </li>
+            {{/each}}
+        </ul>
+        <p><strong>Total a pagar: </strong>${{total}}</p>
+    </div>
+    {{/each}}
+</div>

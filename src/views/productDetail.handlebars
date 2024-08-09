@@ -1,0 +1,31 @@
+<div>
+    <a href="/products" class="home-btn">HOME</a>
+    <a href="/carts" class="home-btn">Carritos</a>
+
+    <div class="detailContainer">
+        <div class="card">
+            <h3>{{productFinded.title}}</h3>
+            <p>{{productFinded.description}}</p>
+            <p>{{productFinded.category}}</p>
+            <p><strong>Codigo: </strong>{{productFinded.code}}</p>
+            <p><strong>Precio: </strong> ${{productFinded.price}}</p>
+            <p><strong>Stock: </strong> {{productFinded.stock}}</p>
+            <p><strong>Disponibilidad:</strong>
+                {{#if productFinded.status}}
+                Disponible para enviar
+                {{else}}
+                No disponible para envíos
+                {{/if}}
+            </p>
+
+            <form action="/api/carts/{{cid}}/product/{{productFinded._id}}" method="post">
+                <label for="quantity">Cantidad:</label>
+                <div>
+                    <input type="number" id="quantity" name="quantity" min="1" max="{{productFinded.stock}}" value="1" required>
+                </div>
+                <button type="submit" >Agregar al carrito</button>
+            </form>
+        </div>
+    </div>
+</div>
+

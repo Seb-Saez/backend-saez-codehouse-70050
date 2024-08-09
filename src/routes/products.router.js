@@ -26,6 +26,22 @@ router.post('/', async (req, res) => {
 
 
 
+// GET para obtener todos los productos 
+router.get('/', async (req, res) => {
+    try {
+        const productFind = await productModel.find();
+
+        if (productFind) {
+            res.status(200).json({ message: "Se encontraron los siguientes productos", resultado: productFind });
+        } else {
+            res.status(404).json({ message: 'No se encontraron productos' });
+        }
+    } catch (error) {
+        res.status(500).json({ message: 'Error al buscar productos', error: error.message });
+    }
+});
+
+
 // GET para obtener un producto por id
 router.get('/:pid', async (req, res) => {
     const { pid } = req.params;

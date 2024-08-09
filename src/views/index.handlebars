@@ -1,0 +1,12 @@
+<a href="/carts" class="home-btn">Carritos</a>
+<div class="cardContainer">
+    {{#each productList}}
+    <div class="card">
+        <h3>{{this.title}}</h3>
+        <p>{{this.description}}</p>
+        <p><strong>Precio:</strong> ${{this.price}}</p>
+        <p><strong>Stock:</strong> {{this.stock}}</p>
+        <a class="btn1" href="/products/{{this._id}}" >Ver detalles</a>
+    </div>
+    {{/each}}
+</div>

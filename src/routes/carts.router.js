@@ -47,8 +47,7 @@ router.get('/:cid', async (req, res) => {
 
 
 
-// POST para agregar un producto a un carrito y actualizar el stock
-
+// POST para agregar un producto a un carrito
 router.post('/:cid/product/:pid', async (req, res) => {
     const { cid, pid } = req.params;
     const { quantity } = req.body;
@@ -68,11 +67,11 @@ router.post('/:cid/product/:pid', async (req, res) => {
             return res.status(400).json({ message: 'Stock insuficiente' });
         }
 
-        // Descontar el stock en mongo
+        //   descontar el stock en mongo
         product.stock -= quantity;
         await product.save();
 
-        // Agregar el product al carro
+        //  agregar el product al carro
         const productIndex = cart.products.findIndex(p => p.productId.toString() === pid);
         if (productIndex >= 0) {
             cart.products[productIndex].quantity += quantity;
@@ -87,7 +86,7 @@ router.post('/:cid/product/:pid', async (req, res) => {
     }
 });
 
-// Eliminar un producto de un carrito por id  (no vuelve a sumar el stock)
+// DELETE para eliminar un producto de un carrito por id 
 router.delete('/:cid/product/:pid', async (req, res) => {
     const { cid, pid } = req.params;
 
@@ -104,12 +103,10 @@ router.delete('/:cid/product/:pid', async (req, res) => {
                 return res.status(404).json({ message: 'No se encontro el producto' });
             }
 
-            // Sumar de vuelta el stock a products en la DB
-            product.stock += cart.products[productIndex].quantity;
+            product.stock += cart.products[productIndex].quantity;     //sumar de vuelta al stock de mongo 
             await product.save();
 
-            // Eliminar el producto del carrito
-            cart.products.splice(productIndex, 1);
+            cart.products.splice(productIndex, 1);      //  Elminar el producto del carro 
             await cart.save();
 
             res.status(200).json({ message: 'Producto eliminado del carrito con éxito', cart });
@@ -118,6 +115,95 @@ router.delete('/:cid/product/:pid', async (req, res) => {
         }
     } catch (err) {
         res.status(500).json({ message: 'Se produjo un error al intentar eliminar un producto, intentelo nuevamente', error: err });
+    }
+});
+
+
+// DELETE para eliminar todos los productos de un carrito
+
+router.delete('/:cid', async (req, res) => {
+    const { cid } = req.params;
+
+    try {
+        const cart = await cartModel.findById(cid);
+        if (!cart) {
+            return res.status(404).json({ message: 'No se encontro el carrito' });
+        }
+
+        // recuperar todos los productos del carro
+        const productUpdates = cart.products.map(async (item) => {
+            const product = await productModel.findById(item.productId);
+            if (product) {
+                product.stock += item.quantity;
+                await product.save();
+            }
+        });
+
+        await Promise.all(productUpdates);  // esperar a que se actualicen los stocks
+
+        cart.products = [];
+        await cart.save();
+
+        res.status(200).json({ message: 'Se eliminaron los productos del carrito exitosamente', cart });
+    } catch (err) {
+        res.status(500).json({ message: 'Se produjo un error al eliminar los productos, intentelo nuevamente', error: err });
+    }
+});
+
+// PUT para modificar la cantidad de un producto que tengams en un carrito 
+
+router.put('/:cid/product/:pid', async (req, res) => {
+    const { cid, pid } = req.params;
+    const { quantity } = req.body;
+
+    if (quantity == null  || quantity == 0) {
+        return res.status(400).json({ message: 'Debe proporcionar una cantidad válida' });
+    }
+
+    try {
+        const cart = await cartModel.findById(cid);
+        if (!cart) {
+            return res.status(404).json({ message: 'Carrito no encontrado' });
+        }
+
+        const product = await productModel.findById(pid);
+        if (!product) {
+            return res.status(404).json({ message: 'Producto no encontrado' });
+        }
+
+        const cartProduct = cart.products.find(p => p.productId.toString() === pid);
+        if (!cartProduct) {
+            return res.status(404).json({ message: 'Producto no encontrado en el carrito' });
+        }
+
+        const newQuantity = cartProduct.quantity + quantity;
+
+        if (newQuantity < 0) {
+            return res.status(400).json({ message: 'No se puede reducir la cantidad por debajo de cero' });
+        }
+
+        //  validacion para ver si alcanza el stock para la nueva cantidad
+        if (quantity > 0 && product.stock < quantity) {
+            return res.status(400).json({ message: 'Stock insuficiente para la cantidad solicitada' });
+        }
+
+        if (newQuantity === 0) {
+            // si la cantidad nva queda en 0 eliminar el prod del carro
+            cart.products = cart.products.filter(p => p.productId.toString() !== pid);
+        } else {
+            // actualizar el quantity del carro
+            cartProduct.quantity = newQuantity;
+        }
+        
+        await cart.save();
+
+        // actualizar stock en mongo
+        product.stock -= quantity;
+        await product.save();
+
+        res.status(200).json({ message: newQuantity === 0 ? 'Producto eliminado del carrito con éxito' : 'Cantidad actualizada con éxito', cart });
+    } catch (err) {
+        res.status(500).json({ message: 'Error al actualizar la cantidad del producto en el carrito', error: err });
     }
 });
 

@@ -22,7 +22,9 @@ Body:
 }
 
 
+- Listar todos los productos
 
+GET - http://localhost:8080/api/products/
 
 
 - Solicitar un producto por ID:
@@ -83,3 +85,8 @@ En body un json con el obj:
 	    "quantity": N     (Numero a agregar)
 
 }
+
+
+█ Vistas:
+
+http://localhost:8080/home
