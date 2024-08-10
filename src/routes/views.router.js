@@ -3,13 +3,19 @@ import ProductManager from '../Class/productManager.js';
 import { __dirname } from '../utils.js';
 import { productModel } from '../model/product.model.js'
 import cartModel from '../model/cart.Model.js';
+import MDBProductManager from '../Dao/mongoProductManager.js';
 import mongoose from 'mongoose';
 
+// instancio mi product manager
+
+const pm = new MDBProductManager();
 
 const viewRoute = Router();
 const productManager = new ProductManager(__dirname + '/data/product.json');
 
+
 // GET para listar todos los productos (con archivos locales, 2da preentrega)
+
 viewRoute.get('/home', async (req, res) => {
     try {
         const productList = await productManager.getProductList();
@@ -20,7 +26,10 @@ viewRoute.get('/home', async (req, res) => {
     }
 });
 
+
+
 // GET para mostrar productos en tiempo real (con archivos locales 2da preentrega)
+
 viewRoute.get('/realtimeproducts', async (req, res) => {
     const productList = await productManager.getProductList();
     res.render('realTimeProducts', { productList });
@@ -28,21 +37,46 @@ viewRoute.get('/realtimeproducts', async (req, res) => {
 
 
 
-// GET para mostrar todos los productos vista /products
+// GET para renderizar todos los productos con mongoDB
 
-viewRoute.get('/products', async (req, res)=>{
+viewRoute.get('/index', async (req, res) => {
     try {
-        const productList = await productModel.find().lean();
+        const { limit = 10, page = 1, sort = '', ...query } = req.query;
+        const sortManager = {
+            'asc': 1,
+            'desc': -1
+        };
 
-        if (productList) {
-            res.render('index', { productList });
-        } else {
-            res.status(404).json({ message: 'No se encontraron productos' });
-        }
+        const products = await productModel.paginate(
+            { ...query },
+            {
+                limit: parseInt(limit),
+                page: parseInt(page),
+                ...(sort && { sort: { price: sortManager[sort] } }),
+                customLabels: { docs: 'productList', totalPages: 'totalPages', page: 'currentPage' },
+                lean: true
+            }
+        );
+
+        // enlaces de paginacion
+        const prevLink = products.hasPrevPage ? `/products?page=${products.prevPage}&limit=${limit}&sort=${sort}` : null;
+        const nextLink = products.hasNextPage ? `/products?page=${products.nextPage}&limit=${limit}&sort=${sort}` : null;
+
+        res.render('index', {
+            productList: products.productList,
+            currentPage: products.currentPage,
+            totalPages: products.totalPages,
+            hasPrevPage: products.hasPrevPage,
+            hasNextPage: products.hasNextPage,
+            prevLink,
+            nextLink
+        });
+
     } catch (error) {
-        res.status(500).json({ message: 'Error al buscar productos', error: error.message });
+        res.status(500).json({ message: 'Se produjo un error al listar los productos, intentelo nuevamente', error: error.message });
     }
 });
+
 
 
 // GET para mostrar detalles de un producto en vista /products/:pid

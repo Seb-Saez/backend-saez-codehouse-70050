@@ -9,7 +9,7 @@
         :root {
     --background: #758488;
     --color1: #007bff;
-    --color2: #28a745;
+    --color2: #278349;
     --text-color: #333;
 }
 
@@ -99,7 +99,7 @@ form button:hover {
 
 .card p {
     text-transform: capitalize;
-    margin: 8px 0;
+    margin: 10px 5px;
 }
 
 .card p strong {
@@ -114,6 +114,7 @@ form button:hover {
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s;
+    text-decoration: none;
 }
 
 .card button.deleteBtn:hover {
@@ -247,6 +248,7 @@ form button:hover {
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    text-decoration: none;
 }
 
 .cart-card ul li button{
@@ -258,6 +260,58 @@ form button:hover {
     color:white;
     cursor: pointer;
     
+}
+
+.paginateContainer{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 30vw;
+    margin: auto;
+}
+
+.paginateContainer a{
+    background-color: var(--color1);
+    color: rgb(255, 255, 255);
+    text-decoration: none;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 0.5em;
+}
+
+.paginateContainer p{
+    color: #333;
+    background-color: #ddd;
+    padding: 5px 15px;
+    border: none;
+    border-radius: 0.5em;
+}
+
+nav{
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    width: 100%;
+    height: 20vh;
+    background-color: #ddd;
+
+}
+
+.navContainer .nav-btn{
+    background-color: var(--background);
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 0.5em;
+    text-decoration: none;
+}
+.navContainer .nav-btn-main{
+    background-color: #3f6392;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 0.5em;
+    text-decoration: none;
 }
 
 

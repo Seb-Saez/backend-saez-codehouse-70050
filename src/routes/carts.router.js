@@ -4,8 +4,7 @@ import { productModel } from '../model/product.model.js';
 
 
 const router = Router();
-// const cartManager = new CartManager(__dirname + '/data/cart.json');
-// const productManager = new ProductManager(__dirname + '/data/product.json');
+
 
 // POST para crear un nuevo carrito
 router.post('/', async (req, res) => {
@@ -130,7 +129,7 @@ router.delete('/:cid', async (req, res) => {
             return res.status(404).json({ message: 'No se encontro el carrito' });
         }
 
-        // recuperar todos los productos del carro
+        // recuperar otdos los productos del carro
         const productUpdates = cart.products.map(async (item) => {
             const product = await productModel.findById(item.productId);
             if (product) {
@@ -139,7 +138,7 @@ router.delete('/:cid', async (req, res) => {
             }
         });
 
-        await Promise.all(productUpdates);  // esperar a que se actualicen los stocks
+        await Promise.all(productUpdates);  // esperar a que se actualien los stocks antes de guardar
 
         cart.products = [];
         await cart.save();

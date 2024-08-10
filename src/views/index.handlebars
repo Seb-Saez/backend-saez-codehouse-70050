@@ -1,8 +1,18 @@
+<nav class="navContainer" >
+<a href="/index" class="nav-btn-main">Todos los productos</a>
+<a href="/index?category=Monitores" class="nav-btn">Monitores</a>
+<a href="/index?category=Perifericos" class="nav-btn">Perifericos</a>
+<a href="/index?category=GPU" class="nav-btn">GPU</a>
+<a href="/index?category=Notebooks" class="nav-btn">Notebooks</a>
+<a href="/index?category=Gabinetes" class="nav-btn">Gabinetes</a>
 <a href="/carts" class="home-btn">Carritos</a>
+
+</nav>
 <div class="cardContainer">
     {{#each productList}}
     <div class="card">
         <h3>{{this.title}}</h3>
+        <p><strong>Categoria:</strong> {{this.category}}</p>
         <p>{{this.description}}</p>
         <p><strong>Precio:</strong> ${{this.price}}</p>
         <p><strong>Stock:</strong> {{this.stock}}</p>
@@ -10,3 +20,21 @@
     </div>
     {{/each}}
 </div>
+<br/>
+<div class="paginateContainer" >
+    {{#if hasPrevPage}}
+    <a href={{this.prevLink}}>Anterior</a>
+    {{/if}}
+    <p>
+        &nbsp;
+        Pagina {{this.currentPage}}
+        &nbsp;
+
+    </p>
+    {{#if hasNextPage}}
+    <a href={{this.nextLink}}>Siguiente</a>
+    {{/if}}
+</div>
+{{#else}}
+<h1>No hay estudiantes para mostrar</h1>
+{{/else}}

@@ -90,3 +90,19 @@ En body un json con el obj:
 █ Vistas:
 
 http://localhost:8080/home
+
+http://localhost:8080/realtimeproducts
+
+http://localhost:8080/products
+
+http://localhost:8080/products/:pid
+
+http://localhost:8080/carts
+
+http://localhost:8080/carts/:cid
+
+http://localhost:8080/cartDetail
+
+
+
+

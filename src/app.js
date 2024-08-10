@@ -9,6 +9,10 @@ import handlebars from 'express-handlebars';
 import http from 'http';
 import { Server } from 'socket.io';
 import mongoose from 'mongoose';
+import dotenv from 'dotenv';
+
+// config de variables de entorno
+dotenv.config();
 
 // config de express
 const app = express();
@@ -67,10 +71,10 @@ io.on('connection', (socket) => {
     });
 });
 
+
 // Conectar BBDD con mongoose
 
-mongoose.connect(
-    'mongodb+srv://sebastiansaez:hipH7OsAVhpG7dAH@coderback-1-70050.vmsndmx.mongodb.net/?retryWrites=true&w=majority&appName=CoderBack-1-70050', { dbName: 'coderback' })
+mongoose.connect(process.env.MONGO_URI, { dbName: 'coderback' })
     .then(()=>{
         console.log("Conectado a la BBDD correctamente");
         
