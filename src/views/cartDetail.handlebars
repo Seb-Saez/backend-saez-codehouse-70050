@@ -16,28 +16,28 @@
 
 <script>
     function deleteProduct(cid, pid) {
-        if (!cid || !pid) {
-            console.error('CID o PID está vacío', { cid, pid });
-            return;
-        }
-        
-        fetch(`/api/carts/${cid}/product/${pid}`, {
-            method: 'DELETE'
-        })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`Error: ${response.statusText}`);
-            }
-            return response.json();
-        })
-        .then(data => {
-            console.log('Producto eliminado con éxito:', data);
-            location.reload();  // recargar la pag
-        })
-        .catch(error => {
-            console.error('Error al eliminar el producto:', error);
-        });
+    if (!cid || !pid) {
+        console.error('CID o PID está vacío', { cid, pid });
+        return;
     }
+    
+    fetch(`/api/carts/${cid}/product/${pid}`, {
+        method: 'DELETE'
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`Error: ${response.statusText}`);
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log('Producto eliminado con éxito:', data);
+        location.reload();  // recargar la pag
+    })
+    .catch(error => {
+        console.error('Error al eliminar el producto:', error);
+    });
+}
 
-    console.log('Script cargado');
+console.log('Script cargado');
 </script>

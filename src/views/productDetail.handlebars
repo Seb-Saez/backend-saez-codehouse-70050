@@ -18,7 +18,7 @@
                 {{/if}}
             </p>
 
-            <form action="/api/carts/{{cid}}/product/{{productFinded._id}}" method="post">
+            <form action="/api/carts/{{cid}}/product/{{productFinded._id}}" method="post" >
                 <label for="quantity">Cantidad:</label>
                 <div>
                     <input type="number" id="quantity" name="quantity" min="1" max="{{productFinded.stock}}" value="1" required>

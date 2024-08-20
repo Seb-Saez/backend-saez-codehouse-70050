@@ -59,8 +59,8 @@ viewRoute.get('/index', async (req, res) => {
         );
 
         // enlaces de paginacion
-        const prevLink = products.hasPrevPage ? `/products?page=${products.prevPage}&limit=${limit}&sort=${sort}` : null;
-        const nextLink = products.hasNextPage ? `/products?page=${products.nextPage}&limit=${limit}&sort=${sort}` : null;
+        const prevLink = products.hasPrevPage ? `/index?page=${products.prevPage}&limit=${limit}&sort=${sort}` : null;
+        const nextLink = products.hasNextPage ? `/index?page=${products.nextPage}&limit=${limit}&sort=${sort}` : null;
 
         res.render('index', {
             productList: products.productList,
